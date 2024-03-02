@@ -2,8 +2,8 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, getToken, user } from "../index.js";
 import { deletePost } from "../api.js";
-// import { formatDistanceToNow } from "date-fns";
-// import { ru } from "date-fns/locale";
+import { formatDistanceToNow } from "date-fns";
+import { ru } from "date-fns/locale";
 import { likeEventListener } from "./posts-page-component.js";
 import { replaceSafe } from "../helpers.js";
 
