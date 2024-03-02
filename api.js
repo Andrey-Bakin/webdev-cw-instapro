@@ -68,3 +68,47 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+export function addPost({ token, description, imageUrl }) {
+  const commentInputElement = document.getElementById('description')
+  return fetch(postsHost, {
+    method: 'POST',
+    body: JSON.stringify({
+      description,
+      imageUrl,
+    }),
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    if (response.status === 400) {
+      alert('Необходимо добавить фото и комментарий')
+    } else {
+      return response.json();
+    }
+  });
+}
+
+export function getUserPosts({ token, userid }) {
+  return fetch(postsHost + `/user-posts/${userid}`, {
+      method: 'GET',
+      headers: {
+          Authorization: token,
+      },
+  })
+      .then((response) => {
+          if (response.status === 401) {
+              throw new Error('Нет авторизации')
+          }
+          return response.json();
+      })
+      .then((data) => {
+        
+          return data.posts;
+      })
+      .catch((error) => {
+          alert('Пропал интернет, попробуйте позже')
+
+      });
+}
+
