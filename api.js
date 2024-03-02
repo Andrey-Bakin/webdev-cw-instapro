@@ -36,7 +36,7 @@ export function registerUser({ login, password, name, imageUrl }) {
       throw new Error("Такой пользователь уже существует");
     }
     if (text === !text) {
-      throw new Error("Введите текст")
+      throw new Error("Введите текст");
     }
     return response.json();
   });
@@ -113,3 +113,44 @@ export function getUserPosts({ token, userid }) {
       });
 }
 
+export function deletePost({
+  token,
+  id
+}) {
+  return fetch(`${postsHost}/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: token
+    }
+  })
+  
+}
+
+export function setLike({ token, postId }) {
+  return fetch(`${postsHost}/${postId}/like`, {
+      method: 'POST',
+      headers: {
+          Authorization: token,
+      },
+  }).then((response) => {
+      if (response.status === 401) {
+        alert('Поставить лайк можно только поcле авторизации');
+          throw new Error('Нет авторизации')
+      }
+      return response.json();
+  });
+}
+export function removeLike({ token, postId }) {
+  return fetch(`${postsHost}/${postId}/dislike`, {
+      method: 'POST',
+      headers: {
+          Authorization: token,
+      },
+  }).then((response) => {
+      if (response.status === 401) {
+        alert('Сначала аторизуйтесь');
+          throw new Error('Нет авторизации')
+      }
+      return response.json();
+  });
+}
