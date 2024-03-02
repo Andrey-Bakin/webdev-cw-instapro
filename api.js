@@ -1,5 +1,3 @@
-// Замени на свой, чтобы получить независимый от других набор данных.
-// "боевая" версия инстапро лежит в ключе prod
 const personalKey = "andrey-bakin";
 const baseHost = "https://wedev-api.sky.pro";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
@@ -36,6 +34,9 @@ export function registerUser({ login, password, name, imageUrl }) {
   }).then((response) => {
     if (response.status === 400) {
       throw new Error("Такой пользователь уже существует");
+    }
+    if (text === !text) {
+      throw new Error("Введите текст")
     }
     return response.json();
   });

@@ -2,8 +2,8 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, getToken, renderApp } from "../index.js";
 import { removeLike, setLike } from "../api.js";
-// import { formatDistanceToNow } from "date-fns";
-// import { ru } from "date-fns/locale";
+import { formatDistanceToNow } from "date-fns";
+import { ru } from "date-fns/locale";
 import { replaceSafe } from "../helpers.js";
 
 export function renderPostsPageComponent({ appEl }) {
