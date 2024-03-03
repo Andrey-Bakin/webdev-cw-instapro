@@ -71,14 +71,14 @@ export const goToPage = (newPage, data) => {
 
     if (newPage === USER_POSTS_PAGE) {
       let userId = data.userId;
-      
+
       return getUserPosts({ token: getToken(), userid: userId })
         .then((newPosts) => {
           page = USER_POSTS_PAGE;
           posts = [];
           return renderApp();
         });
-      }
+    }
 
     page = newPage;
     renderApp();
@@ -116,7 +116,7 @@ export const renderApp = () => {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-         addPost({
+        addPost({
           token: getToken(),
           description,
           imageUrl,

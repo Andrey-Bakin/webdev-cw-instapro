@@ -103,7 +103,7 @@ export function postDeleteButton() {
       console.log();
       deletePost({ token: getToken(), id }).then(() => {
         goToPage(USER_POSTS_PAGE, {
-          userId: user._id,
+          userId: user.id,
         });
       });
     });

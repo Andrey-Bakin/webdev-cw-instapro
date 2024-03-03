@@ -74,10 +74,10 @@ export function renderPostsPageComponent({ appEl }) {
 							${postItem.date} назад
 						</p>
 					</li>
-				</ul >`;
-            })
-      }
+				</ul >`})}
 			</div > `;
+  ;
+
   appEl.innerHTML = appHtml;
 
   renderHeaderComponent({
@@ -95,26 +95,28 @@ export function renderPostsPageComponent({ appEl }) {
   likeEventListener();
 }
 
-export function likeEventListener() {
-  const likeButtons = document.querySelectorAll(".like-button");
-  likeButtons.forEach((likeButton) => {
-    likeButton.addEventListener("click", (event) => {
-      event.stopPropagation();
-      const postId = likeButton.dataset.postId;
-      const index = likeButton.dataset.index;
-      if (posts[index].isLiked) {
-        removeLike({ token: getToken(), postId }).then((updatedPost) => {
-          posts[index].isLiked = false;
-          posts[index].likes = updatedPost.post.likes;
-          renderApp();
-        });
-      } else {
-        setLike({ token: getToken(), postId }).then((updatedPost) => {
-          posts[index].isLiked = true;
-          posts[index].likes = updatedPost.post.likes;
-          renderApp();
-        });
-      }
-    });
-  });
-}
+export function likeEventListener () {
+	const likeButtons = document.querySelectorAll(".like-button")
+	likeButtons.forEach(likeButton => {
+		likeButton.addEventListener("click", (event) => {
+			event.stopPropagation();
+			const postId = likeButton.dataset.postId
+			const index = likeButton.dataset.index
+			if (posts[index].isLiked) {
+				removeLike({ token: getToken(), postId })
+					.then((updatedPost) => {
+						posts[index].isLiked = false;
+						posts[index].likes = updatedPost.post.likes;
+						renderApp();
+					})
+			} else {
+				setLike({ token: getToken(), postId })
+					.then((updatedPost) => {
+						posts[index].isLiked = true;
+						posts[index].likes = updatedPost.post.likes;
+						renderApp();
+					})
+			}
+		})
+	});
+};
