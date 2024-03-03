@@ -5,16 +5,16 @@ import { deletePost } from "../api.js";
 import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale";
 import { likeEventListener } from "./posts-page-component.js";
-import { replaceSafe } from "../helpers.js";
+import { sanitizeInput } from "../helpers.js";
 
 export function renderUserPostsPageComponent({ appEl }) {
   const getApiPosts = posts.map((postItem) => {
     return {
       postImageUrl: postItem.imageUrl,
       date: formatDistanceToNow(new Date(postItem.createdAt), { locale: ru }),
-      description: replaceSafe(postItem.description),
+      description: sanitizeInput(postItem.description),
       userId: postItem.user.id,
-      userName: replaceSafe(postItem.user.name),
+      userName: sanitizeInput(postItem.user.name),
       userLogin: postItem.user.login,
       postImageUserUrl: postItem.user.imageUrl,
       usersLikes: postItem.likes,
@@ -36,12 +36,14 @@ export function renderUserPostsPageComponent({ appEl }) {
 						<img class="post-image" src="${postItem.postImageUrl}" data-index="${index}">
 					</div>
 					<div class="post-likes">
-						<button data-post-id="${postItem.id}"data-like="${postItem.isLiked ? 'true' : ''}" data-index="${index}" class="like-button">
+						<button data-post-id="${postItem.id}"data-like="${
+      postItem.isLiked ? "true" : ""
+    }" data-index="${index}" class="like-button">
 					<img src=${
-					  postItem.isLiked
-						  ? './assets/images/like-active.svg'
-						  : './assets/images/like-not-active.svg'
-				  }>
+            postItem.isLiked
+              ? "./assets/images/like-active.svg"
+              : "./assets/images/like-not-active.svg"
+          }>
 				  </button> 
 						<p class="post-likes-text">
 						Нравится: <strong>${
@@ -56,7 +58,11 @@ export function renderUserPostsPageComponent({ appEl }) {
             }
 						</p>
             <button class="delete-button" data-post-id="${postItem.id}">
-            ${postItem.userId === user?._id ? `<p class="delete">Удалить</p>` : ""} 
+            ${
+              postItem.userId === user?._id
+                ? `<p class="delete">Удалить</p>`
+                : ""
+            } 
 					</div>
 					
 					<p class="post-text">
@@ -90,19 +96,18 @@ export function renderUserPostsPageComponent({ appEl }) {
 }
 
 export function postDeleteButton() {
-const deleteButtons = document.querySelectorAll(".delete-button");
-for (let deleteButton of deleteButtons) {
-  deleteButton.addEventListener("click", () => {
-	const id = deleteButton.dataset.postId
-  console.log();
-	deletePost({ token: getToken(), id })
-  .then(() => {
-      goToPage(USER_POSTS_PAGE, {
-        userId: user._id
-      })
-    })
-})
-}
+  const deleteButtons = document.querySelectorAll(".delete-button");
+  for (let deleteButton of deleteButtons) {
+    deleteButton.addEventListener("click", () => {
+      const id = deleteButton.dataset.postId;
+      console.log();
+      deletePost({ token: getToken(), id }).then(() => {
+        goToPage(USER_POSTS_PAGE, {
+          userId: user._id,
+        });
+      });
+    });
+  }
 }
 
 likeEventListener();

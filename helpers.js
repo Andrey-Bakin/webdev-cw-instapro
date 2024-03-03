@@ -14,10 +14,10 @@ export function removeUserFromLocalStorage(user) {
   window.localStorage.removeItem("user");
 }
 
-export function replaceSafe(text) {
+export function sanitizeInput(text) {
   return text
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }

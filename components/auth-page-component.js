@@ -1,7 +1,7 @@
 import { loginUser, registerUser } from "../api.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
-import { replaceSafe } from "../helpers.js";
+import { sanitizeInput } from "../helpers.js";
 
 export function renderAuthPageComponent({ appEl, setUser }) {
   let isLoginMode = true;
@@ -128,9 +128,9 @@ export function renderAuthPageComponent({ appEl, setUser }) {
         }
 
         registerUser({
-          login: replaceSafe(login),
+          login: sanitizeInput(login),
           password: password,
-          name: replaceSafe(name),
+          name: sanitizeInput(name),
           imageUrl,
         })
           .then((user) => {
