@@ -1,7 +1,6 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, getToken, user } from "../index.js";
-import { deletePost } from "../api.js";
 import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale";
 import { likeEventListener } from "./posts-page-component.js";
@@ -57,12 +56,7 @@ export function renderUserPostsPageComponent({ appEl }) {
                 : "0"
             }
 						</p>
-            <button class="delete-button" data-post-id="${postItem.id}">
-            ${
-              postItem.userId === user?._id
-                ? `<p class="delete">Удалить</p>`
-                : ""
-            } 
+            
 					</div>
 					
 					<p class="post-text">
@@ -90,24 +84,8 @@ export function renderUserPostsPageComponent({ appEl }) {
       });
     });
   }
-  postDeleteButton();
-
+  
   likeEventListener();
-}
-
-export function postDeleteButton() {
-  const deleteButtons = document.querySelectorAll(".delete-button");
-  for (let deleteButton of deleteButtons) {
-    deleteButton.addEventListener("click", () => {
-      const id = deleteButton.dataset.postId;
-      console.log();
-      deletePost({ token: getToken(), id }).then(() => {
-        goToPage(USER_POSTS_PAGE, {
-          userId: user.id,
-        });
-      });
-    });
-  }
 }
 
 likeEventListener();

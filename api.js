@@ -98,6 +98,9 @@ export function getUserPosts({ token, userid }) {
     },
   })
     .then((response) => {
+      if (response.status === 201) {
+        return
+      }
       if (response.status === 401) {
         throw new Error("Нет авторизации");
       }
@@ -140,11 +143,3 @@ export function removeLike({ token, postId }) {
   });
 }
 
-export function deletePost({ token, id }) {
-  return fetch(`${postsHost}/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: token,
-    },
-  });
-}

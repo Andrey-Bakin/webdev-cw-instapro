@@ -7,62 +7,47 @@ import { ru } from "date-fns/locale";
 import { sanitizeInput } from "../helpers.js";
 
 export function renderPostsPageComponent({ appEl }) {
-  const getApiPosts = posts.length
-    ? posts.map((postItem) => {
-        return {
-          postImageUrl: postItem.imageUrl,
-          date: formatDistanceToNow(new Date(postItem.createdAt), {
-            locale: ru,
-          }),
-          description: sanitizeInput(postItem.description),
-          userId: postItem.user.id,
-          userName: sanitizeInput(postItem.user.name),
-          userLogin: postItem.user.login,
-          postImageUserUrl: postItem.user.imageUrl,
-          usersLikes: postItem.likes,
-          isLiked: postItem.isLiked,
-          id: postItem.id,
-        };
-      })
-    : [];
-  const appHtml = `<div class="page-container">
+  const getApiPosts = posts.length ? posts.map((postItem) => {
+    return {
+      postImageUrl: postItem.imageUrl,
+      date: formatDistanceToNow(new Date(postItem.createdAt), { locale: ru }),
+      description: sanitizeInput(postItem.description),
+      userId: postItem.user.id,
+      userName: sanitizeInput(postItem.user.name),
+      userLogin: postItem.user.login,
+      postImageUserUrl: postItem.user.imageUrl,
+      usersLikes: postItem.likes,
+      isLiked: postItem.isLiked,
+	  id: postItem.id,
+    };
+  }) : [];
+  const appHtml = 
+  	`<div class="page-container">
 		<div class="header-container"></div>
-			${
-        !getApiPosts.length
-          ? `<div>Постов сейчас нет</div>`
-          : getApiPosts.map((postItem, index) => {
-              return `<ul class="posts">
+			${ !getApiPosts.length 
+					?
+						`<div>Постов сейчас нет</div>`
+					: getApiPosts.map((postItem, index) => {
+						return `<ul class="posts">
 					<li class="post" data-index=${index}>
 						<div class="post-header" data-user-id="${postItem.userId}">
 							<img src="${postItem.postImageUserUrl}" class="post-header__user-image">
 							<p class="post-header__user-name">${postItem.userName}</p>
 						</div>
 						<div class="post-image-container">
-							<img class="post-image" data-post-id="${postItem.id}" src="${
-                postItem.postImageUrl
-              }" data-index="${index}">
+							<img class="post-image" data-post-id="${postItem.id}" src="${postItem.postImageUrl}" data-index="${index}">
 						</div>
 						<div class="post-likes">
-						<button data-post-id="${postItem.id}"data-like="${
-                postItem.isLiked ? "true" : ""
-              }" data-index="${index}" class="like-button">
+						<button data-post-id="${postItem.id}"data-like="${postItem.isLiked ? 'true' : ''}" data-index="${index}" class="like-button">
 						<img src=${
-              postItem.isLiked
-                ? "./assets/images/like-active.svg"
-                : "./assets/images/like-not-active.svg"
-            }>
+						postItem.isLiked
+							? './assets/images/like-active.svg'
+							: './assets/images/like-not-active.svg'
+					}>
 					</button> 
 							<p class="post-likes-text">
-							Нравится: ${
-                postItem.usersLikes.length > 0
-                  ? `${postItem.usersLikes[postItem.usersLikes.length - 1].name}
-							${
-                postItem.usersLikes.length - 1 > 0
-                  ? "и ещё" + (postItem.usersLikes.length - 1)
-                  : ""
-              } `
-                  : "0"
-              }
+							Нравится: ${postItem.usersLikes.length > 0 ? `${postItem.usersLikes[postItem.usersLikes.length - 1].name}
+							${postItem.usersLikes.length - 1 > 0 ? 'и ещё' + (postItem.usersLikes.length - 1) : ''} ` : '0'}
 							</p>
 						</div>
 						</div>

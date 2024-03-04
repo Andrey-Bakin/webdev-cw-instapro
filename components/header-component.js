@@ -2,7 +2,6 @@ import { goToPage, logout, user } from "../index.js";
 import { ADD_POSTS_PAGE, AUTH_PAGE, POSTS_PAGE } from "../routes.js";
 
 export function renderHeaderComponent({ element }) {
-  
   element.innerHTML = `
   <div class="page-header">
       <h1 class="logo">instapro</h1>
@@ -18,6 +17,7 @@ export function renderHeaderComponent({ element }) {
           ? `<button title="${user.name}" class="header-button logout-button">Выйти</button>`
           : ""
       }  
+      </button>
   </div>
   
 `;
